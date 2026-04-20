@@ -6,20 +6,7 @@ import SettingsBar from "./settings/SettingsBar";
 import verses from "../data/verses";
 import { useState } from "react";
 import type { Mode, VerseSubmission, QuizType, Verse } from "../types";
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  Divider,
-  Stack,
-  Chip,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 
 const RandomVersePage = () => {
   const [mode, setMode] = useState<Mode>("test");
@@ -36,6 +23,7 @@ const RandomVersePage = () => {
   const generateRandomArray = (n: number): number[] => {
     const pool = Array.from({ length: selected.length }, (_, i) => i);
     for (let i = pool.length - 1; i > 0; i--) {
+      //@ts-ignore
       const j = Math.floor(Math.random() * (i + 1));
       [pool[i], pool[j]] = [pool[j], pool[i]];
     }

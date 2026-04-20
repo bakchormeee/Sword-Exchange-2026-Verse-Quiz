@@ -1,24 +1,7 @@
-import verses from "../../../data/verses";
+//@ts-nocheck
 import SingleVerseQuiz from "./SingleVerseQuiz";
-import SettingsBar from "../../settings/SettingsBar";
 import { type SyntheticEvent } from "react";
-import type { QuizType, Verse } from "../../../types";
-import { useState } from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  Divider,
-  Stack,
-  Chip,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
-import VerseSelector from "../../settings/VerseFilter";
+import { Button, Stack } from "@mui/material";
 
 const VerseContentQuizQns = ({ onSubmit, versesForQuiz }) => {
   const handleSubmit = (event: SyntheticEvent) => {

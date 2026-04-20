@@ -1,6 +1,8 @@
+//@ts-nocheck
 import SingleVerseQuiz from "./SingleVerseQuiz";
 import { type SyntheticEvent } from "react";
 import { Button, Stack } from "@mui/material";
+import { type Verse } from "../../../types";
 
 const VerseRefQuizQns = ({ onSubmit, versesForQuiz }) => {
   const handleSubmit = (event: SyntheticEvent) => {

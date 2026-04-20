@@ -1,5 +1,4 @@
 import type { VerseSubmission } from "../../../types";
-import levenshtein from "js-levenshtein-esm";
 import {
   Card,
   CardContent,

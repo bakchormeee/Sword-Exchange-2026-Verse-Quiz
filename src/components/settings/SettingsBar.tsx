@@ -9,7 +9,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import VerseSelector from "../settings/VerseFilter";
-import { SyntheticEvent, useState } from "react";
+import { type SyntheticEvent, useState } from "react";
 import type { Verse, QuizType } from "../../types";
 
 const SettingsBar = ({

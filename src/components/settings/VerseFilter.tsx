@@ -35,10 +35,12 @@ const VerseSelector = ({
 
   const handleToggle = (reference: string) => {
     const fullVerse = verses.find((verse) => verse.reference === reference);
-    const updated = selected.map((verse) => verse.reference).includes(reference)
-      ? selected.filter((r) => r.reference !== reference)
-      : [...selected, fullVerse];
-    console.log(updated);
+    let updated = selected;
+    if (fullVerse !== undefined) {
+      updated = selected.map((verse) => verse.reference).includes(reference)
+        ? selected.filter((r) => r.reference !== reference)
+        : [...selected, fullVerse];
+    }
     setSelected(updated);
   };
 
@@ -49,7 +51,6 @@ const VerseSelector = ({
             !filtered.map((v) => v.reference).includes(verse.reference),
         ) // deselect all filtered
       : [...new Set([...selected, ...filtered])]; // select all filtered
-    console.log(updated);
     setSelected(updated);
   };
 
