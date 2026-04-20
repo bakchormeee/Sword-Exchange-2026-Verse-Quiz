@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 const getAccuracyColor = (accuracy: number) => {
-  if (accuracy >= 80) return "success";
+  if (accuracy >= 90) return "success";
   if (accuracy >= 50) return "warning";
   return "error";
 };
