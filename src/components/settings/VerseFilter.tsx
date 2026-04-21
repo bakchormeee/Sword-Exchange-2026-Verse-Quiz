@@ -58,7 +58,14 @@ const VerseSelector = ({
           (verse) =>
             !filtered.map((v) => v.reference).includes(verse.reference),
         ) // deselect all filtered
-      : [...new Set([...selected, ...filtered])]; // select all filtered
+      : verses.filter((verse) =>
+          [
+            ...new Set([
+              ...selected.map((v) => v.reference),
+              ...filtered.map((v) => v.reference),
+            ]),
+          ].includes(verse.reference),
+        );
     setSelected(updated);
     updateCache(updated);
   };
