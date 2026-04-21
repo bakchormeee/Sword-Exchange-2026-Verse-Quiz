@@ -4,16 +4,25 @@ import VerseRefQuizQns from "./VerseReferenceQuiz/testpage";
 import VerseRefQuizSummaryPage from "./VerseReferenceQuiz/summarypage";
 import SettingsBar from "./settings/SettingsBar";
 import verses from "../data/verses";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Mode, VerseSubmission, QuizType, Verse } from "../types";
-import { Box, Typography, Divider } from "@mui/material";
+import { Box } from "@mui/material";
 
 const RandomVersePage = () => {
   const [mode, setMode] = useState<Mode>("test");
   const [submission, setSubmission] = useState<VerseSubmission[]>([]);
   const [quizMode, setQuizMode] = useState<QuizType>("content");
   const [testNum, setTestNum] = useState(1);
-  const [selected, setSelected] = useState<Verse[]>(verses);
+  const [selected, setSelected] = useState<Verse[]>([]);
+
+  useEffect(() => {
+    const prevSelection = localStorage.getItem("selected");
+    if (!prevSelection) {
+      setSelected(verses);
+    } else {
+      setSelected(JSON.parse(prevSelection));
+    }
+  }, []);
 
   const onSubmit = (submittedVerses: VerseSubmission[]) => {
     setSubmission(submittedVerses);
@@ -32,23 +41,6 @@ const RandomVersePage = () => {
 
   const versesForQuiz = generateRandomArray(testNum).map(
     (idx) => selected[idx],
-  );
-
-  const QuizHeader = () => (
-    <div>
-      <Typography variant="h4" sx={{ fontWeight: "bold" }} gutterBottom>
-        Scripture Memory Quiz
-      </Typography>
-      <Divider sx={{ mb: 3 }} />
-      <SettingsBar
-        testNum={testNum}
-        setTestNum={setTestNum}
-        selected={selected}
-        setSelected={setSelected}
-        quizMode={quizMode}
-        setQuizMode={setQuizMode}
-      />
-    </div>
   );
 
   const VerseContentQuiz = () => (
@@ -84,7 +76,16 @@ const RandomVersePage = () => {
 
   return (
     <Box sx={{ maxWidth: "100%", mx: "auto", px: 3, py: 4 }}>
-      {mode === "test" && <QuizHeader />}
+      {mode === "test" && (
+        <SettingsBar
+          testNum={testNum}
+          setTestNum={setTestNum}
+          selected={selected}
+          setSelected={setSelected}
+          quizMode={quizMode}
+          setQuizMode={setQuizMode}
+        />
+      )}
       {quizMode === "content" && <VerseContentQuiz />}
       {quizMode === "reference" && <VerseRefQuiz />}
     </Box>

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, type SyntheticEvent } from "react";
 import {
   Box,
   TextField,
@@ -21,6 +21,11 @@ const VerseSelector = ({
 }) => {
   const [search, setSearch] = useState("");
 
+  const updateCache = (updated: Verse[]) => {
+    localStorage.removeItem("selected");
+    localStorage.setItem("selected", JSON.stringify(updated));
+  };
+
   const filtered = useMemo(
     () =>
       verses.filter((v) =>
@@ -41,10 +46,13 @@ const VerseSelector = ({
         ? selected.filter((r) => r.reference !== reference)
         : [...selected, fullVerse];
     }
+    console.log("Toggled");
     setSelected(updated);
+    updateCache(updated);
   };
 
-  const handleSelectAll = () => {
+  const handleSelectAll = (event: SyntheticEvent) => {
+    event.preventDefault();
     const updated = allFilteredSelected
       ? selected.filter(
           (verse) =>
@@ -52,6 +60,7 @@ const VerseSelector = ({
         ) // deselect all filtered
       : [...new Set([...selected, ...filtered])]; // select all filtered
     setSelected(updated);
+    updateCache(updated);
   };
 
   return (
@@ -72,7 +81,12 @@ const VerseSelector = ({
         />
 
         {/* Select All */}
-        <Button size="small" onClick={handleSelectAll} sx={{ mb: 1 }}>
+        <Button
+          size="small"
+          onClick={handleSelectAll}
+          sx={{ mb: 1 }}
+          type="button"
+        >
           {allFilteredSelected ? "Deselect All" : "Select All"}
         </Button>
 
